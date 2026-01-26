@@ -490,19 +490,7 @@ copies of the Software.
 
 ---
 
-## 🚀 Améliorations futures
 
-- [ ] Système d'authentification (inscription/connexion)
-- [ ] Profils utilisateurs avec avatars
-- [ ] Mode sombre
-- [ ] Notifications en temps réel (WebSocket)
-- [ ] Upload d'images dans les messages
-- [ ] Système de votes (upvote/downvote)
-- [ ] Modération avancée (signalement, bannissement)
-
----
-
-<div align="center">
 
 **Développé avec ❤️ pour le module Développement Web**
 
