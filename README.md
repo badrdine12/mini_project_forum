@@ -1,351 +1,480 @@
-DevForum - Forum Communautaire pour Développeurs
- Version 
+# 🗨️ DevForum - Forum de Discussion Communautaire
 
- PHP 
+Un forum de discussion moderne développé en PHP, JavaScript (AJAX) et MySQL avec une interface responsive Material Design.
 
- Bootstrap 
+![PHP](https://img.shields.io/badge/PHP-8.0+-777BB4?style=flat-square&logo=php&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-5.7+-4479A1?style=flat-square&logo=mysql&logoColor=white)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3-7952B3?style=flat-square&logo=bootstrap&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
 
- License 
-Un forum communautaire moderne et réactif pour développeurs, conçu pour faciliter le partage de connaissances, l'apprentissage et la collaboration.
-📋 Table des matières
-Aperçu
-Fonctionnalités
-Captures d'écran
-Prérequis
-Installation
-Configuration
-Structure du projet
-API Documentation
-Base de données
-Utilisation
-BBCode Support
-Responsive Design
-Sécurité
-Contribution
-Licence
-Auteur
-🎯 Aperçu
-DevForum est une application web de forum développée en PHP avec une interface utilisateur moderne utilisant Bootstrap 5. Elle offre une expérience utilisateur fluide avec des fonctionnalités avancées comme la recherche en temps réel, le support BBCode, la pagination, et une interface entièrement responsive.
-Points forts
-🎨 Interface moderne et intuitive
-⚡ Rechargement dynamique sans refresh (AJAX)
-📱 Design 100% responsive (mobile, tablette, desktop)
-🔍 Recherche en temps réel avec debounce
-💬 Éditeur BBCode avec aperçu en direct
-📊 Statistiques du forum en temps réel
-🔔 Système de notifications toast
-📡 Flux RSS intégré
-✨ Fonctionnalités
-Gestion des Catégories
-Création et affichage de catégories
-Compteur de sujets par catégorie
-Navigation hiérarchique (breadcrumb)
-Gestion des Sujets
-Création de nouveaux sujets
-Épinglage/désépinglage des sujets
-Verrouillage/déverrouillage des sujets
-Compteur de vues et de réponses
-Pagination des sujets
-Gestion des Messages
-Publication de réponses
-Modification des messages
-Suppression des messages
-Aperçu BBCode en temps réel
-Badges "Auteur du sujet" et "Modifié"
-Recherche
-Recherche en temps réel (debounce 400ms)
-Recherche par titre, contenu et auteur
-Affichage des résultats avec mise en évidence
-Statistiques
-Sujets les plus populaires
-Contributeurs les plus actifs
-Nombre total de sujets et membres
-Interface Utilisateur
-Sidebar navigation avec statistiques
-Navigation mobile optimisée (bottom nav)
-Mode sombre/clair (préparation)
-Toast notifications
-Loading states
-📸 Captures d'écran
-Les captures d'écran seront ajoutées prochainement
-🔧 Prérequis
-Serveur
-PHP >= 8.0
-MySQL >= 5.7 ou MariaDB >= 10.3
-Apache >= 2.4 ou Nginx >= 1.18
-Composer (optionnel, pour l'autoloading)
-Extensions PHP requises
-pdo et pdo_mysql
-json
-mbstring
-xml (pour le flux RSS)
-Navigateurs supportés
-Chrome >= 90
-Firefox >= 88
-Safari >= 14
-Edge >= 90
-🚀 Installation
-1. Cloner le projet
-bash
-Copy
-git clone https://github.com/votre-username/devforum.git
-cd devforum
-2. Configurer la base de données
-bash
-Copy
-# Créer la base de données
-mysql -u root -p -e "CREATE DATABASE devforum CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+---
 
-# Importer le schéma
-mysql -u root -p devforum < database/schema.sql
-3. Configuration
-bash
-Copy
-# Copier le fichier de configuration
-cp config/database.example.php config/database.php
+## 📋 Table des matières
 
-# Éditer les paramètres de connexion
-nano config/database.php
-4. Permissions
-bash
-Copy
-# Définir les permissions (Linux/Mac)
-chmod 755 -R .
-chmod 777 -R uploads/  # Si vous avez des uploads
-5. Accéder au forum
-Ouvrez votre navigateur et accédez à :
-http://localhost/devforum/
-⚙️ Configuration
-Fichier config/database.php
-php
-Copy
+- [Présentation](#-présentation)
+- [Fonctionnalités](#-fonctionnalités)
+- [Technologies utilisées](#-technologies-utilisées)
+- [Prérequis](#-prérequis)
+- [Installation](#-installation)
+- [Structure du projet](#-structure-du-projet)
+- [Architecture de l'application](#-architecture-de-lapplication)
+- [API REST](#-api-rest)
+- [Base de données](#-base-de-données)
+- [Captures d'écran](#-captures-décran)
+- [Tests](#-tests)
+- [Auteurs](#-auteurs)
+- [Licence](#-licence)
+
+---
+
+## 🎯 Présentation
+
+### Objectif du projet
+
+DevForum est une application web de forum communautaire permettant aux utilisateurs de :
+- Créer et participer à des discussions organisées par catégories
+- Échanger des messages avec mise en forme (BBCode)
+- Rechercher du contenu en temps réel
+- Suivre les tendances et statistiques du forum
+
+### Contexte
+
+Ce projet a été réalisé dans le cadre du module **Développement Web** pour démontrer la maîtrise des technologies web côté client et serveur.
+
+### Public cible
+
+- Communautés de développeurs
+- Groupes d'étudiants
+- Entreprises (support interne)
+- Toute communauté souhaitant un espace de discussion structuré
+
+---
+
+## ✨ Fonctionnalités
+
+### 📂 Gestion des Catégories
+| Fonctionnalité | Description |
+|----------------|-------------|
+| Liste des catégories | Affichage avec nombre de sujets |
+| Navigation | Accès direct aux sujets d'une catégorie |
+
+### 💬 Gestion des Sujets
+| Fonctionnalité | Description |
+|----------------|-------------|
+| Créer un sujet | Titre + message initial |
+| Consulter | Affichage paginé des messages |
+| Épingler | Maintenir un sujet en haut de liste |
+| Verrouiller | Empêcher les nouvelles réponses |
+| Compteur de vues | Statistiques de consultation |
+
+### 📝 Gestion des Messages
+| Fonctionnalité | Description |
+|----------------|-------------|
+| Répondre | Ajouter un message à un sujet |
+| Modifier | Éditer son message |
+| Supprimer | Retirer un message |
+| BBCode | Mise en forme (gras, italique, code, liens, citations) |
+| Prévisualisation | Aperçu en temps réel |
+
+### 🔍 Recherche
+| Fonctionnalité | Description |
+|----------------|-------------|
+| Recherche AJAX | Résultats en temps réel |
+| Multi-critères | Titre, contenu, auteur |
+| Résultats paginés | Navigation facilitée |
+
+### 📊 Statistiques
+| Fonctionnalité | Description |
+|----------------|-------------|
+| Sujets populaires | Top 10 par vues |
+| Top contributeurs | Classement par messages |
+| Compteurs globaux | Sujets, messages, membres |
+
+### 📡 Flux RSS
+| Fonctionnalité | Description |
+|----------------|-------------|
+| Derniers messages | 20 dernières publications |
+| Format standard | Compatible tous lecteurs RSS |
+
+### 🎨 Interface Utilisateur
+| Fonctionnalité | Description |
+|----------------|-------------|
+| Design responsive | Mobile, tablette, desktop |
+| Sidebar navigation | Menu latéral structuré |
+| Bottom navigation | Barre mobile |
+| Notifications Toast | Feedback visuel moderne |
+| Animations fluides | Transitions CSS |
+
+---
+
+## 🛠 Technologies utilisées
+
+### Backend
+| Technologie | Version | Utilisation |
+|-------------|---------|-------------|
+| PHP | 8.0+ | API REST, logique métier |
+| MySQL | 5.7+ | Base de données relationnelle |
+| PDO | - | Accès base de données sécurisé |
+
+### Frontend
+| Technologie | Version | Utilisation |
+|-------------|---------|-------------|
+| HTML5 | - | Structure des pages |
+| CSS3 | - | Styles et animations |
+| JavaScript | ES6+ | Interactivité (AJAX) |
+| Bootstrap | 5.3 | Framework CSS responsive |
+| Bootstrap Icons | 1.11 | Bibliothèque d'icônes |
+| Google Fonts | Inter | Typographie moderne |
+
+### Architecture
+| Concept | Implementation |
+|---------|----------------|
+| SPA | Single Page Application |
+| REST API | Interface de communication |
+| MVC | Séparation des responsabilités |
+| AJAX | Requêtes asynchrones |
+| JSON | Format d'échange de données |
+
+---
+
+## 📦 Prérequis
+
+### Logiciels requis
+
+- **Serveur web** : XAMPP, WAMP, MAMP ou serveur Apache/Nginx
+- **PHP** : Version 8.0 ou supérieure
+- **MySQL** : Version 5.7 ou supérieure
+- **Navigateur** : Chrome, Firefox, Edge ou Safari (versions récentes)
+
+### Extensions PHP requises
+
+```
+✅ pdo_mysql
+✅ json
+✅ mbstring
+```
+
+---
+
+## 🚀 Installation
+
+### Étape 1 : Télécharger le projet
+
+**Option A - Cloner avec Git :**
+```bash
+git clone https://github.com/votre-username/mini_project_forum.git
+```
+
+**Option B - Télécharger le ZIP :**
+1. Télécharger le fichier ZIP
+2. Extraire le contenu
+
+### Étape 2 : Placer dans le dossier web
+
+| Serveur | Chemin |
+|---------|--------|
+| XAMPP Windows | `C:\xampp\htdocs\mini_project_forum` |
+| XAMPP Mac | `/Applications/XAMPP/htdocs/mini_project_forum` |
+| WAMP | `C:\wamp64\www\mini_project_forum` |
+| Linux | `/var/www/html/mini_project_forum` |
+
+### Étape 3 : Créer la base de données
+
+1. Démarrer **Apache** et **MySQL** dans XAMPP
+2. Ouvrir phpMyAdmin : `http://localhost/phpmyadmin`
+3. Créer une nouvelle base de données : `forum_discussion`
+4. Importer le fichier SQL :
+   - Aller dans l'onglet "Importer"
+   - Sélectionner `database/forum_discussion.sql`
+   - Cliquer sur "Exécuter"
+
+### Étape 4 : Configurer la connexion
+
+Modifier `config/database.php` si nécessaire :
+
+```php
 <?php
-return [
-    'host'     => 'localhost',
-    'database' => 'devforum',
-    'username' => 'votre_username',
-    'password' => 'votre_mot_de_passe',
-    'charset'  => 'utf8mb4',
-    'options'  => [
-        PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-        PDO::ATTR_EMULATE_PREPARES   => false,
-    ]
-];
-Configuration Apache (.htaccess)
-apache
-Copy
-RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ index.php [QSA,L]
-📁 Structure du projet
-Copy
-devforum/
-├── api/
-│   └── forum.php              # API REST principale
-├── config/
-│   ├── database.php           # Configuration BDD
-│   └── database.example.php   # Exemple de configuration
-├── css/
-│   └── style.css              # Styles personnalisés
-├── js/
-│   └── forum.js               # JavaScript principal
-├── database/
-│   └── schema.sql             # Schéma de la base de données
-├── uploads/                   # Dossier des uploads (si activé)
-├── index.php                  # Point d'entrée principal
-├── README.md                  # Ce fichier
-└── .htaccess                  # Configuration Apache
-📚 API Documentation
-Endpoints
-Table
-Copy
-Méthode	Endpoint	Description
-GET	api/forum.php?action=categories	Liste toutes les catégories
-GET	api/forum.php?action=sujets	Liste les sujets (avec filtres)
-GET	api/forum.php?action=sujet&id={id}	Détails d'un sujet
-POST	api/forum.php?action=sujets	Créer un nouveau sujet
-PUT	api/forum.php?action=sujet	Modifier un sujet
-GET	api/forum.php?action=messages	Liste les messages d'un sujet
-POST	api/forum.php?action=messages	Ajouter un message
-PUT	api/forum.php?action=message	Modifier un message
-DELETE	api/forum.php?action=message	Supprimer un message
-GET	api/forum.php?action=search&q={query}	Rechercher
-GET	api/forum.php?action=stats	Statistiques du forum
-GET	api/forum.php?action=rss	Flux RSS
-Exemples de requêtes
-Créer un sujet
-JavaScript
-Copy
-fetch('api/forum.php?action=sujets', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-        categorie_id: 1,
-        auteur: 'JohnDoe',
-        titre: 'Mon premier sujet',
-        contenu: 'Contenu du message...'
-    })
-});
-Rechercher
-JavaScript
-Copy
-fetch('api/forum.php?action=search&q=php')
-    .then(r => r.json())
-    .then(data => console.log(data));
-🗄️ Base de données
-Schéma
-sql
-Copy
--- Table: categories
+define('DB_HOST', 'localhost');     // Serveur MySQL
+define('DB_NAME', 'forum_discussion'); // Nom de la base
+define('DB_USER', 'root');          // Utilisateur MySQL
+define('DB_PASS', '');              // Mot de passe (vide par défaut sur XAMPP)
+```
+
+### Étape 5 : Lancer l'application
+
+Ouvrir dans le navigateur :
+```
+http://localhost/mini_project_forum/
+```
+
+---
+
+## 📁 Structure du projet
+
+```
+mini_project_forum/
+│
+├── 📂 api/
+│   └── forum.php              # API REST (toutes les actions CRUD)
+│
+├── 📂 config/
+│   └── database.php           # Configuration connexion BDD
+│
+├── 📂 css/
+│   └── style.css              # Styles personnalisés (1800+ lignes)
+│
+├── 📂 js/
+│   └── forum.js               # JavaScript AJAX (780+ lignes)
+│
+├── 📂 includes/
+│   ├── header.php             # En-tête réutilisable
+│   └── footer.php             # Pied de page réutilisable
+│
+├── 📂 database/
+│   └── forum_discussion.sql   # Script SQL (structure + données)
+│
+├── 📄 index.php               # Page principale (SPA)
+├── 📄 README.md               # Documentation (ce fichier)
+└── 📄 .htaccess               # Configuration Apache (optionnel)
+```
+
+---
+
+## 🏗 Architecture de l'application
+
+### Diagramme de l'architecture
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                        NAVIGATEUR                            │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────┐  │
+│  │  index.php  │  │  style.css  │  │     forum.js        │  │
+│  │   (HTML)    │  │   (CSS)     │  │  (JavaScript/AJAX)  │  │
+│  └─────────────┘  └─────────────┘  └──────────┬──────────┘  │
+└───────────────────────────────────────────────┼─────────────┘
+                                                │
+                          Requêtes AJAX (JSON)  │
+                                                ▼
+┌─────────────────────────────────────────────────────────────┐
+│                      SERVEUR (Apache)                        │
+│  ┌─────────────────────────────────────────────────────┐    │
+│  │                   api/forum.php                      │    │
+│  │  ┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐   │    │
+│  │  │  GET    │ │  POST   │ │  PUT    │ │ DELETE  │   │    │
+│  │  │ (Lire)  │ │(Créer)  │ │(Modifier)│ │(Supprimer)│   │    │
+│  │  └─────────┘ └─────────┘ └─────────┘ └─────────┘   │    │
+│  └──────────────────────────┬──────────────────────────┘    │
+└─────────────────────────────┼───────────────────────────────┘
+                              │
+                              │ PDO (requêtes SQL)
+                              ▼
+┌─────────────────────────────────────────────────────────────┐
+│                     BASE DE DONNÉES (MySQL)                  │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────┐  │
+│  │ categories  │  │   sujets    │  │      messages       │  │
+│  │ (id, nom,   │  │ (id, titre, │  │ (id, contenu,       │  │
+│  │ description)│  │ auteur...)  │  │  auteur, date...)   │  │
+│  └─────────────┘  └─────────────┘  └─────────────────────┘  │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Flux de données
+
+```
+1. Utilisateur → Action (clic, saisie)
+2. JavaScript → Requête AJAX vers API
+3. API PHP → Traitement + Requête SQL
+4. MySQL → Données
+5. API PHP → Réponse JSON
+6. JavaScript → Mise à jour du DOM
+7. Utilisateur → Voit le résultat
+```
+
+---
+
+## 🔌 API REST
+
+### Base URL
+```
+http://localhost/mini_project_forum/api/forum.php?action=
+```
+
+### Endpoints
+
+#### Catégories
+| Méthode | Action | Description |
+|---------|--------|-------------|
+| GET | `categories` | Liste toutes les catégories |
+
+**Exemple de réponse :**
+```json
+[
+  {
+    "id": 1,
+    "nom": "Général",
+    "description": "Discussions générales",
+    "nb_sujets": 5
+  }
+]
+```
+
+#### Sujets
+| Méthode | Action | Paramètres | Description |
+|---------|--------|------------|-------------|
+| GET | `sujets` | `categorie_id`, `page` | Liste des sujets |
+| POST | `sujets` | Body JSON | Créer un sujet |
+| GET | `sujet` | `id` | Détail d'un sujet |
+| PUT | `sujet` | Body JSON | Modifier (épingler/verrouiller) |
+
+#### Messages
+| Méthode | Action | Paramètres | Description |
+|---------|--------|------------|-------------|
+| GET | `messages` | `sujet_id`, `page` | Messages d'un sujet |
+| POST | `messages` | Body JSON | Ajouter un message |
+| PUT | `message` | Body JSON | Modifier un message |
+| DELETE | `message` | Body JSON | Supprimer un message |
+
+#### Autres
+| Méthode | Action | Description |
+|---------|--------|-------------|
+| GET | `search?q=terme` | Recherche |
+| GET | `stats` | Statistiques |
+| GET | `rss` | Flux RSS (XML) |
+
+---
+
+## 🗄 Base de données
+
+### Schéma MCD (Modèle Conceptuel)
+
+```
+┌─────────────────┐       ┌─────────────────┐       ┌─────────────────┐
+│   CATEGORIES    │       │     SUJETS      │       │    MESSAGES     │
+├─────────────────┤       ├─────────────────┤       ├─────────────────┤
+│ id (PK)         │       │ id (PK)         │       │ id (PK)         │
+│ nom             │───1:N─│ categorie_id(FK)│───1:N─│ sujet_id (FK)   │
+│ description     │       │ titre           │       │ auteur          │
+│ ordre           │       │ auteur          │       │ contenu         │
+└─────────────────┘       │ date_creation   │       │ date_creation   │
+                          │ vues            │       │ date_modification│
+                          │ epingle         │       │ modifie         │
+                          │ verrouille      │       └─────────────────┘
+                          └─────────────────┘
+```
+
+### Schéma MLD (Structure SQL)
+
+```sql
+-- Table des catégories
 CREATE TABLE categories (
-    id INT PRIMARY KEY AUTO_INCREMENT,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     nom VARCHAR(100) NOT NULL,
     description TEXT,
-    ordre INT DEFAULT 0,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    ordre INT DEFAULT 0
 );
 
--- Table: sujets
+-- Table des sujets
 CREATE TABLE sujets (
-    id INT PRIMARY KEY AUTO_INCREMENT,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     categorie_id INT NOT NULL,
-    auteur VARCHAR(50) NOT NULL,
     titre VARCHAR(255) NOT NULL,
-    epingle BOOLEAN DEFAULT FALSE,
-    verrouille BOOLEAN DEFAULT FALSE,
+    auteur VARCHAR(100) NOT NULL,
+    date_creation DATETIME DEFAULT CURRENT_TIMESTAMP,
     vues INT DEFAULT 0,
-    date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (categorie_id) REFERENCES categories(id) ON DELETE CASCADE
+    epingle TINYINT(1) DEFAULT 0,
+    verrouille TINYINT(1) DEFAULT 0,
+    FOREIGN KEY (categorie_id) REFERENCES categories(id)
 );
 
--- Table: messages
+-- Table des messages
 CREATE TABLE messages (
-    id INT PRIMARY KEY AUTO_INCREMENT,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     sujet_id INT NOT NULL,
-    auteur VARCHAR(50) NOT NULL,
+    auteur VARCHAR(100) NOT NULL,
     contenu TEXT NOT NULL,
-    modifie BOOLEAN DEFAULT FALSE,
-    date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    date_creation DATETIME DEFAULT CURRENT_TIMESTAMP,
+    date_modification DATETIME,
+    modifie TINYINT(1) DEFAULT 0,
     FOREIGN KEY (sujet_id) REFERENCES sujets(id) ON DELETE CASCADE
 );
-Indexes recommandés
-sql
-Copy
-CREATE INDEX idx_sujets_categorie ON sujets(categorie_id);
-CREATE INDEX idx_sujets_epingle ON sujets(epingle);
-CREATE INDEX idx_messages_sujet ON messages(sujet_id);
-CREATE FULLTEXT INDEX idx_search ON sujets(titre), messages(contenu);
-🎮 Utilisation
-Navigation
-Accueil - Liste des catégories
-Tous les sujets - Vue globale de toutes les discussions
-Catégorie - Sujets d'une catégorie spécifique
-Sujet - Messages d'une discussion
-Actions utilisateur
-Table
-Copy
-Action	Comment
-Créer un sujet	Cliquer sur "Nouveau sujet"
-Répondre	Remplir le formulaire en bas du sujet
-Modifier	Cliquer sur l'icône ✏️ sur son message
-Supprimer	Cliquer sur l'icône 🗑️ sur son message
-Épingler	Bouton "Épingler" (créateur/modérateur)
-Verrouiller	Bouton "Verrouiller" (créateur/modérateur)
-📝 BBCode Support
-Le forum supporte les balises BBCode suivantes :
-Table
-Copy
-Balise	Rendu	Exemple
-[b]texte[/b]	Gras	[b]Important[/b]
-[i]texte[/i]	Italique	[i]Citation[/i]
-[u]texte[/u]	<u>	[u]Note[/u]
-[code]code[/code]	Code	[code]echo "Hello";[/code]
-[url=lien]texte[/url]	Lien	[url=https://example.com]Site[/url]
-[quote]texte[/quote]	> Citation	[quote]Citation[/quote]
-Barre d'outils BBCode
-L'éditeur dispose d'une barre d'outils pour insérer facilement les balises :
-B - Gras
-I - Italique
-<u> - Souligné
-</> - Code
-🔗 - Lien
-❝ ❞ - Citation
-📱 Responsive Design
-Breakpoints
-Table
-Copy
-Breakpoint	Largeur	Description
-Mobile	< 576px	Navigation bottom, sidebar cachée
-Tablette	576px - 991px	Sidebar collapsible
-Desktop	>= 992px	Sidebar fixe, pleine largeur
-Composants adaptatifs
-Navbar : Compacte sur mobile avec recherche dépliable
-Sidebar : Drawer sur mobile, fixe sur desktop
-Bottom Nav : Navigation rapide sur mobile
-Cards : Pleine largeur sur mobile, grille sur desktop
-Formulaires : Empilés sur mobile, côte à côte sur desktop
-🔒 Sécurité
-Mesures implémentées
-Table
-Copy
-Mesure	Description
-XSS Protection	Échappement HTML avec escapeHtml()
-SQL Injection	Requêtes préparées PDO
-CSRF	Tokens (à implémenter selon besoin)
-Validation	Validation côté client et serveur
-Rate Limiting	Debounce sur la recherche
-Bonnes pratiques
-JavaScript
-Copy
-// Toujours échapper le contenu utilisateur
-function escapeHtml(text) {
-    return text
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-}
-🤝 Contribution
-Les contributions sont les bienvenues ! Voici comment participer :
-Rapport de bugs
-Vérifiez si le bug n'a pas déjà été signalé
-Créez une issue avec :
-Description détaillée
-Étapes de reproduction
-Comportement attendu vs réel
-Screenshots si applicable
-Pull Requests
-Fork le projet
-Créez une branche (git checkout -b feature/ma-fonctionnalite)
-Committez vos changements (git commit -m 'Ajout de...')
-Push sur la branche (git push origin feature/ma-fonctionnalite)
-Ouvrez une Pull Request
-Code Style
-PHP : PSR-12
-JavaScript : ESLint recommandé
-CSS : BEM methodology
-📄 Licence
-Ce projet est sous licence MIT.
-Copy
+```
+
+
+
+## 🧪 Tests
+
+### Scénarios de test effectués
+
+| # | Scénario | Résultat |
+|---|----------|----------|
+| 1 | Affichage des catégories | ✅ Passé |
+| 2 | Navigation entre catégories | ✅ Passé |
+| 3 | Création d'un nouveau sujet | ✅ Passé |
+| 4 | Validation des champs (min caractères) | ✅ Passé |
+| 5 | Ajout d'une réponse | ✅ Passé |
+| 6 | Modification d'un message | ✅ Passé |
+| 7 | Suppression d'un message | ✅ Passé |
+| 8 | Protection anti-flood (30s) | ✅ Passé |
+| 9 | Épingler un sujet | ✅ Passé |
+| 10 | Verrouiller un sujet | ✅ Passé |
+| 11 | Recherche avec 3+ caractères | ✅ Passé |
+| 12 | Pagination des résultats | ✅ Passé |
+| 13 | Flux RSS valide | ✅ Passé |
+| 14 | Responsive mobile | ✅ Passé |
+| 15 | BBCode (gras, italique, code) | ✅ Passé |
+
+### Bugs identifiés et corrigés
+
+| Bug | Solution |
+|-----|----------|
+| RSS retournait JSON | Séparation du traitement RSS avant les headers JSON |
+| Recherche ne fonctionnait pas | Correction du format de retour de l'API |
+| Sidebar ne se fermait pas sur mobile | Ajout de closeSidebar() après navigation |
+
+---
+
+## 👥 Auteurs
+
+| Nom | Rôle | Contributions |
+|-----|------|---------------|
+| **[Votre Nom]** | Développeur Full Stack | API REST, Base de données, JavaScript |
+| **[Membre 2]** | Développeur Frontend | Interface UI/UX, CSS, Responsive |
+| **[Membre 3]** | Testeur / Documentaliste | Tests, Rapport, Documentation |
+
+---
+
+## 📄 Licence
+
+Ce projet est sous licence **MIT**.
+
+```
 MIT License
 
-Copyright (c) 2024 DevForum
+Copyright (c) 2025 [Votre Nom]
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
 to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+copies of the Software.
+```
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+---
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+## 🔗 Liens utiles
 
+| Ressource | Lien |
+|-----------|------|
+| 🌐 Démo en ligne |http://binoua.dwm.ma/
+
+
+---
+
+
+
+**Développé avec ❤️ pour le module Développement Web**
+
+*© 2025 - Tous droits réservés*
+
+</div>
 
