@@ -472,9 +472,7 @@ copies of the Software.
 
 
 
-**Développé avec ❤️ pour le module Développement Web**
 
-*© 2025 - Tous droits réservés*
 
 </div>
 
